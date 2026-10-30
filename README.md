@@ -3,6 +3,7 @@ enterprise-rag-deployment
 Enterprise RAG — Kubernetes Deployment
 `enterprise-rag-deployment` is the Helm-based Kubernetes/OpenShift deployment repository for the Enterprise RAG project. It deploys the document indexing job, RAG query API, RustFS S3-compatible object storage, and Qdrant vector database as a single Helm umbrella chart.
 The application reads documents from S3-compatible storage, extracts and chunks content, generates embeddings, indexes vectors with source metadata in Qdrant, and answers user questions through an LLM using retrieved context and source references.
+Authentication (authn) and authorization (authz) are outside the scope of this project. This chart does not implement or document either concern; deployments must address them externally when required.
 For application architecture and coding conventions, see the `enterprise-rag` orchestration repository and its `AGENTS.md`. The Helm-specific requirements are maintained in the deployment specification in `AGENTS.md` when added to the project.
 Repositories and components
 `enterprise-rag` — top-level local development orchestration with Docker Compose and Git submodules.
@@ -27,7 +28,7 @@ Each subchart contains its own `Chart.yaml`, default `values.yaml`, and `templat
 Helm configuration
 Keep rarely changing defaults in each subchart's `values.yaml`. Use the umbrella chart's `values.yaml` and environment-specific override files to configure image names and tags, replicas, resources, persistence, endpoints, networking, and runtime options.
 Helm values for subcharts are normally nested under their chart names. The specific parameter keys must match the chart templates actually implemented; no complete values schema is defined at this conceptual stage.
-Do not commit credentials. The deployment should be able to reference existing Kubernetes Secrets for Qdrant API keys, RustFS credentials, and embedding/LLM provider keys. ConfigMaps should contain only non-sensitive settings. Production access should use appropriate TLS, authorization, and network controls.
+Do not commit credentials. The deployment should be able to reference existing Kubernetes Secrets for Qdrant API keys, RustFS credentials, and embedding/LLM provider keys. ConfigMaps should contain only non-sensitive settings. Production access should use appropriate TLS and network controls; access-control design remains outside this project's scope.
 PersistentVolumeClaims preserve RustFS object data and Qdrant vector data across pod restarts. Storage classes and access modes must be configured for the target cluster. The deployment does not itself guarantee backup, high availability, or disaster recovery.
 Deploy the stack
 Prerequisites: a reachable Kubernetes or OpenShift cluster, configured `kubectl` (or `oc`), Helm 3, a usable namespace, appropriate permissions, container images accessible to the cluster, and persistent storage provisioning.
