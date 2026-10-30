@@ -1,0 +1,29 @@
+{{- if .Values.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: enterprise-rag-indexing
+spec:
+  schedule: {{ .Values.schedule | default "0 * * * *" | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: enterprise-rag-indexing
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              command:
+{{ toYaml .Values.command | nindent 16 }}
+              envFrom:
+                - configMapRef:
+                    name: enterprise-rag-indexing
+                - secretRef:
+                    name: enterprise-rag-indexing
+              volumeMounts:
+                - name: work
+                  mountPath: /work/indexing
+          volumes:
+            - name: work
+              emptyDir: {}
+{{- end }}

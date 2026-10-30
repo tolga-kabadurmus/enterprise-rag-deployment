@@ -1,0 +1,33 @@
+{{- if .Values.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: enterprise-rag-query
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: enterprise-rag-query
+  template:
+    metadata:
+      labels:
+        app: enterprise-rag-query
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchLabels:
+                    app: enterprise-rag-query
+      containers:
+        - name: enterprise-rag-query
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - name: http
+              containerPort: 8080
+          resources:
+{{ toYaml .Values.resources | nindent 12 }}
+{{- end }}

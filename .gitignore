@@ -69,3 +69,6 @@ venv/
 #   Chart.yaml, Chart.lock, values.yaml, values-dev.yaml,
 #   values-prod.yaml, charts/*, templates/* and .helmignore.
 # Do not store actual credentials in tracked values files.
+
+output/*
+!!output/dummy

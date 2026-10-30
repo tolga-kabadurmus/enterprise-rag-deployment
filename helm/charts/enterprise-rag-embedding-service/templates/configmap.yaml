@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: enterprise-rag-embedding-service
+data:
+  EMBEDDING_SERVICE_HOST: {{ .Values.config.host | quote }}
+  EMBEDDING_SERVICE_PORT: {{ .Values.service.port | quote }}
+  EMBEDDING_SERVICE_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  S3_PROVIDER: {{ .Values.config.s3Provider | quote }}
+  S3_ENDPOINT_URL: {{ .Values.config.s3EndpointUrl | quote }}
+  S3_REGION: {{ .Values.config.s3Region | quote }}
+  S3_ADDRESSING_STYLE: {{ .Values.config.s3AddressingStyle | quote }}
+  S3_VERIFY_TLS: {{ .Values.config.s3VerifyTls | quote }}
+  EMBEDDINGS_MODEL_NAME: {{ .Values.config.modelName | quote }}
+  EMBEDDINGS_REVISION: {{ .Values.config.revision | quote }}
+  EMBEDDINGS_LOCAL_DIRECTORY: {{ .Values.config.localDirectory | quote }}
+  EMBEDDINGS_BUCKET: {{ .Values.config.bucket | quote }}
+  EMBEDDINGS_KEY_PREFIX: {{ .Values.config.keyPrefix | quote }}
+  EMBEDDINGS_DIMENSION: {{ .Values.config.dimension | quote }}
+  EMBEDDINGS_ONNX_MODEL_FILE: {{ .Values.config.onnxModelFile | quote }}
+  EMBEDDINGS_TOKENIZER_FILE: {{ .Values.config.tokenizerFile | quote }}

@@ -1,0 +1,26 @@
+enabled: false
+image:
+  repository: enterprise-rag-query
+  tag: latest
+replicas: 1
+service:
+  port: 8080
+ingress:
+  enabled: false
+  host: rag.example.com
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 3
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 1
+    memory: 1Gi
+config:
+  embeddingServiceUrl: http://enterprise-rag-embedding-service:8081
+  qdrantUrl: http://qdrant:6333
+secret:
+  llmApiKey: REPLACE_WITH_VAULT_VALUE

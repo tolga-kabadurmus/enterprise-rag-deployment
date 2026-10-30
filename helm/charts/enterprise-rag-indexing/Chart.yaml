@@ -1,0 +1,4 @@
+apiVersion: v2
+name: enterprise-rag-indexing
+version: 0.1.0
+type: application

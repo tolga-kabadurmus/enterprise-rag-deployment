@@ -1,0 +1,105 @@
+enterprise-rag-embedding-service:
+  enabled: true
+  ingress:
+    enabled: true
+    host: enterprise-rag-embedding-service.kube.thy
+  image:
+    repository: enterprise-rag-embedding-service
+    tag: latest
+  replicas: 1
+  service:
+    port: 8081
+  hpa:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 3
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 1
+      memory: 2Gi
+  config:
+    host: 0.0.0.0
+    logLevel: INFO
+    s3Provider: rustfs
+    s3EndpointUrl: https://objectstore.kube.uatthy
+    s3Region: us-east-1
+    s3AddressingStyle: path
+    s3VerifyTls: "false"
+    modelName: intfloat/multilingual-e5-small
+    revision: main
+    localDirectory: /models/embedding/intfloat/multilingual-e5-small
+    bucket: models
+    keyPrefix: embeddings/intfloat/multilingual-e5-small
+    dimension: 384
+    onnxModelFile: onnx/model.onnx
+    tokenizerFile: tokenizer.json
+  secret:
+    s3AccessKey: REPLACE_WITH_VAULT_VALUE
+    s3SecretKey: REPLACE_WITH_VAULT_VALUE
+
+
+
+enterprise-rag-indexing:
+  enabled: false
+  image:
+    repository: enterprise-rag-enterprise-rag-indexing
+    tag: latest
+  command: ["python", "-m", "app.main", "--pipeline", "v1", "--concurrency", "4"]
+  secret:
+    s3AccessKey: REPLACE_WITH_VAULT_VALUE
+    s3SecretKey: REPLACE_WITH_VAULT_VALUE
+    qdrantApiKey: REPLACE_WITH_VAULT_VALUE
+  configmap:
+    s3_provider: rustfs
+    s3_endpoint_url: https://objectstore.kube.uatthy
+    s3_region: us-east-1
+    s3_addressing_style: path
+    s3_verify_tls: "true"
+    s3_max_concurrency: "4"
+    s3_processing_bucket: documents-processing
+    s3_claim_ttl_seconds: "3600"
+    s3_source_bucket: documents
+    indexing_work_directory: /work/indexing
+    pdf_chunk_size: "1200"
+    pdf_chunk_overlap: "200"
+    embedding_service_url: https://enterprise-rag-embedding-service.kube.uatthy
+    embedding_service_api_path: /v1/embeddings
+    embedding_service_timeout_seconds: "60"
+    embedding_service_expected_model: intfloat/multilingual-e5-small
+    embedding_service_expected_dimension: "384"
+    vector_provider: qdrant
+    qdrant_url: https://qdrant.kube.uatthy
+    qdrant_collection_name: enterprise_rag_chunks
+    qdrant_vector_size: "384"
+    qdrant_batch_size: "64"  
+
+enterprise-rag-query:
+  enabled: false
+  image:
+    repository: enterprise-rag-query
+    tag: latest
+  replicas: 1
+  service:
+    port: 8080
+  ingress:
+    enabled: true
+    host: thyvector.kube.uatthy
+  hpa:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 3
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
+  config:
+    embeddingServiceUrl: https://enterprise-rag-embedding-service.kube.uatthy
+    qdrantUrl: https://qdrant.kube.uatthy
+  secret:
+    llmApiKey: REPLACE_WITH_VAULT_VALUE      
