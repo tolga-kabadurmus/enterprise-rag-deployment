@@ -63,6 +63,8 @@ Always run Helm checks before deployment:
 ```bash
 helm lint . -f values-dev.yaml
 helm template enterprise-rag . -f values-dev.yaml --namespace enterprise-rag
+helm template enterprise-rag . -f values-dev.yaml --namespace enterprise-rag > ../output/deployment-dev.yaml
+
 ```
 When a compatible cluster and sufficient permissions are available, perform server-side validation:
 ```bash
