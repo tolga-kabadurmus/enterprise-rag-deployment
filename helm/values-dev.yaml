@@ -75,7 +75,7 @@ enterprise-rag-indexing:
     qdrant_batch_size: "64"  
 
 enterprise-rag-query:
-  enabled: false
+  enabled: true
   image:
     repository: enterprise-rag-query
     tag: latest
