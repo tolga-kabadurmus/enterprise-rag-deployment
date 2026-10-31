@@ -1,0 +1,29 @@
+{{- if .Values.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: enterprise-rag-indexing
+data:
+  S3_PROVIDER: {{ .Values.configmap.s3_provider | quote }}
+  S3_ENDPOINT_URL: {{ .Values.configmap.s3_endpoint_url | quote }}
+  S3_REGION: {{ .Values.configmap.s3_region | quote }}
+  S3_ADDRESSING_STYLE: {{ .Values.configmap.s3_addressing_style | quote }}
+  S3_VERIFY_TLS: "{{ .Values.configmap.s3_verify_tls }}"
+  S3_MAX_CONCURRENCY: "{{ .Values.configmap.s3_max_concurrency }}"
+  S3_PROCESSING_BUCKET: {{ .Values.configmap.s3_processing_bucket | quote }}
+  S3_CLAIM_TTL_SECONDS: "{{ .Values.configmap.s3_claim_ttl_seconds }}"
+  S3_SOURCE_BUCKET: {{ .Values.configmap.s3_source_bucket | quote }}
+  INDEXING_WORK_DIRECTORY: {{ .Values.configmap.indexing_work_directory | quote }}
+  PDF_CHUNK_SIZE: "{{ .Values.configmap.pdf_chunk_size }}"
+  PDF_CHUNK_OVERLAP: "{{ .Values.configmap.pdf_chunk_overlap }}"
+  EMBEDDING_SERVICE_URL: {{ .Values.configmap.embedding_service_url | quote }}
+  EMBEDDING_SERVICE_API_PATH: {{ .Values.configmap.embedding_service_api_path | quote }}
+  EMBEDDING_SERVICE_TIMEOUT_SECONDS: "{{ .Values.configmap.embedding_service_timeout_seconds }}"
+  EMBEDDING_SERVICE_EXPECTED_MODEL: {{ .Values.configmap.embedding_service_expected_model | quote }}
+  EMBEDDING_SERVICE_EXPECTED_DIMENSION: "{{ .Values.configmap.embedding_service_expected_dimension }}"
+  VECTOR_PROVIDER: {{ .Values.configmap.vector_provider | quote }}
+  QDRANT_URL: {{ .Values.configmap.qdrant_url | quote }}
+  QDRANT_COLLECTION_NAME: {{ .Values.configmap.qdrant_collection_name | quote }}
+  QDRANT_VECTOR_SIZE: "{{ .Values.configmap.qdrant_vector_size }}"
+  QDRANT_BATCH_SIZE: "{{ .Values.configmap.qdrant_batch_size }}"
+{{- end }}

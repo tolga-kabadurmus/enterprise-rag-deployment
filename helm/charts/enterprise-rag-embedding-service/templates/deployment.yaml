@@ -1,0 +1,46 @@
+{{- if .Values.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: enterprise-rag-embedding-service
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: enterprise-rag-embedding-service
+  template:
+    metadata:
+      labels:
+        app: enterprise-rag-embedding-service
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchLabels:
+                    app: enterprise-rag-embedding-service
+      containers:
+        - name: enterprise-rag-embedding-service
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - name: http
+              containerPort: 8081
+          envFrom:
+            - configMapRef:
+                name: enterprise-rag-embedding-service
+            - secretRef:
+                name: enterprise-rag-embedding-service
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: http
+          resources:
+{{ toYaml .Values.resources | nindent 12 }}
+{{- end }}

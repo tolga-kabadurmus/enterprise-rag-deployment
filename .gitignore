@@ -1,0 +1,74 @@
+# ----------------------------------------
+# OS / editor temporary files
+# ----------------------------------------
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# ----------------------------------------
+# Local environment variables and secrets
+# ----------------------------------------
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.local.yaml
+*.local.yml
+*.secrets.yaml
+*.secrets.yml
+secrets/
+
+# ----------------------------------------
+# Helm packaged chart artifacts
+# Keep charts/ (local subcharts), Chart.yaml and Chart.lock tracked.
+# ----------------------------------------
+*.tgz
+*.prov
+
+# ----------------------------------------
+# Rendered manifests and local test output
+# Prefer a dedicated ignored output directory.
+# ----------------------------------------
+.rendered/
+.helm-output/
+.tmp/
+
+# ----------------------------------------
+# Helm plugins / local development cache
+# ----------------------------------------
+.helm/
+
+# ----------------------------------------
+# Kubernetes local configuration and credentials
+# ----------------------------------------
+.kube/
+kubeconfig
+kubeconfig.*
+*.kubeconfig
+
+# ----------------------------------------
+# Log files
+# ----------------------------------------
+*.log
+logs/
+
+# ----------------------------------------
+# Python tooling (only if used for local scripts)
+# ----------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# IMPORTANT: Keep these tracked:
+#   Chart.yaml, Chart.lock, values.yaml, values-dev.yaml,
+#   values-prod.yaml, charts/*, templates/* and .helmignore.
+# Do not store actual credentials in tracked values files.
+
+output/*
+!!output/dummy

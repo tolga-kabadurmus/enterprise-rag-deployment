@@ -1,0 +1,14 @@
+apiVersion: v2
+name: enterprise-rag
+version: 0.1.0
+type: application
+dependencies:
+  - name: enterprise-rag-embedding-service
+    version: 0.1.0
+    repository: file://charts/enterprise-rag-embedding-service
+  - name: enterprise-rag-indexing
+    version: 0.1.0
+    repository: file://charts/enterprise-rag-indexing
+  - name: enterprise-rag-retrieval
+    version: 0.1.0
+    repository: file://charts/enterprise-rag-retrieval
