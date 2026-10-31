@@ -1,3 +1,4 @@
+{{- if .Values.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -25,4 +26,4 @@ data:
   QDRANT_COLLECTION_NAME: {{ .Values.configmap.qdrant_collection_name | quote }}
   QDRANT_VECTOR_SIZE: "{{ .Values.configmap.qdrant_vector_size }}"
   QDRANT_BATCH_SIZE: "{{ .Values.configmap.qdrant_batch_size }}"
----
+{{- end }}

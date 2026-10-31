@@ -9,6 +9,6 @@ dependencies:
   - name: enterprise-rag-indexing
     version: 0.1.0
     repository: file://charts/enterprise-rag-indexing
-  - name: enterprise-rag-query
+  - name: enterprise-rag-retrieval
     version: 0.1.0
-    repository: file://charts/enterprise-rag-query
+    repository: file://charts/enterprise-rag-retrieval

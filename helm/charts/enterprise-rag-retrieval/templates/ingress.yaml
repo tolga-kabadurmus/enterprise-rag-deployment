@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: enterprise-rag-query
+  name: enterprise-rag-retrieval
 spec:
   rules:
     - host: {{ .Values.ingress.host | quote }}
@@ -12,7 +12,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: enterprise-rag-query
+                name: enterprise-rag-retrieval
                 port:
                   number: {{ .Values.service.port }}
 {{- end }}

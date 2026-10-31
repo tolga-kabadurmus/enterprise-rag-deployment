@@ -41,7 +41,7 @@ enterprise-rag-embedding-service:
     s3SecretKey: REPLACE_WITH_VAULT_VALUE
 
 enterprise-rag-indexing:
-  enabled: false
+  enabled: true
   image:
     repository: enterprise-rag-enterprise-rag-indexing
     tag: latest
@@ -74,14 +74,14 @@ enterprise-rag-indexing:
     qdrant_vector_size: "384"
     qdrant_batch_size: "64"  
 
-enterprise-rag-query:
+enterprise-rag-retrieval:
   enabled: true
   image:
-    repository: enterprise-rag-query
+    repository: enterprise-rag-retrieval
     tag: latest
   replicas: 1
   service:
-    port: 8080
+    port: 8082
   ingress:
     enabled: true
     host: thyvector.kube.devthy
@@ -96,11 +96,9 @@ enterprise-rag-query:
     limits:
       cpu: 1
       memory: 1Gi
-  config:
-    embeddingServiceUrl: https://enterprise-rag-embedding-service.kube.devthy
-    qdrantUrl: https://qdrant.kube.devthy
+  configmap:
+    embedding_service_url: https://enterprise-rag-embedding-service.kube.devthy
+    qdrant_url: https://qdrant.kube.devthy
   secret:
-    llmApiKey: REPLACE_WITH_VAULT_VALUE
-
-# qdrant: {image: {repository: qdrant/qdrant, tag: v1.20.0}, persistence: {size: 10Gi}}
-# rustfs: {image: {repository: rustfs/rustfs, tag: 1.0.4-glibc}, persistence: {size: 20Gi}}
+    llm_api_key: REPLACE_WITH_VAULT_VALUE
+    qdrant_api_key: REPLACE_WITH_VAULT_VALUE

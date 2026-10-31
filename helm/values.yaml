@@ -1,0 +1,10 @@
+# Safe umbrella defaults. Enable and configure workloads through an
+# environment-specific values file.
+enterprise-rag-embedding-service:
+  enabled: false
+
+enterprise-rag-indexing:
+  enabled: false
+
+enterprise-rag-retrieval:
+  enabled: false

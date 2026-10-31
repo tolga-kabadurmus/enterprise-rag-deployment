@@ -1,0 +1,53 @@
+{{- if .Values.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: enterprise-rag-retrieval
+data:
+  QUERY_API_HOST: {{ .Values.configmap.query_api_host | quote }}
+  QUERY_API_PORT: "{{ .Values.configmap.query_api_port }}"
+  QUERY_API_LOG_LEVEL: {{ .Values.configmap.query_api_log_level | quote }}
+  QUERY_API_REQUEST_TIMEOUT_SECONDS: "{{ .Values.configmap.query_api_request_timeout_seconds }}"
+  QUERY_API_MAX_QUESTION_CHARACTERS: "{{ .Values.configmap.query_api_max_question_characters }}"
+  EMBEDDING_SERVICE_URL: {{ .Values.configmap.embedding_service_url | quote }}
+  EMBEDDING_SERVICE_API_PATH: {{ .Values.configmap.embedding_service_api_path | quote }}
+  EMBEDDING_SERVICE_PROVIDER: {{ .Values.configmap.embedding_service_provider | quote }}
+  EMBEDDING_SERVICE_TIMEOUT_SECONDS: "{{ .Values.configmap.embedding_service_timeout_seconds }}"
+  EMBEDDING_SERVICE_VERIFY_TLS: "{{ .Values.configmap.embedding_service_verify_tls }}"
+  EMBEDDING_SERVICE_MAX_CONNECTIONS: "{{ .Values.configmap.embedding_service_max_connections }}"
+  EMBEDDING_SERVICE_MAX_KEEPALIVE_CONNECTIONS: "{{ .Values.configmap.embedding_service_max_keepalive_connections }}"
+  EMBEDDING_SERVICE_MAX_BATCH_SIZE: "{{ .Values.configmap.embedding_service_max_batch_size }}"
+  EMBEDDING_SERVICE_MAX_TEXT_CHARACTERS: "{{ .Values.configmap.embedding_service_max_text_characters }}"
+  EMBEDDING_SERVICE_EXPECTED_MODEL: {{ .Values.configmap.embedding_service_expected_model | quote }}
+  EMBEDDING_SERVICE_EXPECTED_REVISION: {{ .Values.configmap.embedding_service_expected_revision | quote }}
+  EMBEDDING_SERVICE_EXPECTED_DIMENSION: "{{ .Values.configmap.embedding_service_expected_dimension }}"
+  EMBEDDING_SERVICE_EXPECTED_NORMALIZED: "{{ .Values.configmap.embedding_service_expected_normalized }}"
+  EMBEDDING_SERVICE_EXPECTED_SPARSE_MODEL: {{ .Values.configmap.embedding_service_expected_sparse_model | quote }}
+  QDRANT_PROVIDER: {{ .Values.configmap.qdrant_provider | quote }}
+  QDRANT_URL: {{ .Values.configmap.qdrant_url | quote }}
+  QDRANT_COLLECTION_NAME: {{ .Values.configmap.qdrant_collection_name | quote }}
+  QDRANT_DENSE_VECTOR_NAME: {{ .Values.configmap.qdrant_dense_vector_name | quote }}
+  QDRANT_SPARSE_VECTOR_NAME: {{ .Values.configmap.qdrant_sparse_vector_name | quote }}
+  QDRANT_VECTOR_SIZE: "{{ .Values.configmap.qdrant_vector_size }}"
+  QDRANT_TIMEOUT_SECONDS: "{{ .Values.configmap.qdrant_timeout_seconds }}"
+  RAG_TOP_K: "{{ .Values.configmap.rag_top_k }}"
+  RAG_CANDIDATE_K: "{{ .Values.configmap.rag_candidate_k }}"
+  RAG_HYBRID_PREFETCH_LIMIT: "{{ .Values.configmap.rag_hybrid_prefetch_limit }}"
+  RAG_SCORE_THRESHOLD: "{{ .Values.configmap.rag_score_threshold }}"
+  RAG_MAX_CONTEXT_CHARACTERS: "{{ .Values.configmap.rag_max_context_characters }}"
+  RERANKING_PROVIDER: {{ .Values.configmap.reranking_provider | quote }}
+  RERANKING_MODEL_NAME: {{ .Values.configmap.reranking_model_name | quote }}
+  RERANKING_CACHE_DIR: {{ .Values.configmap.reranking_cache_dir | quote }}
+  RERANKING_MAX_LENGTH: "{{ .Values.configmap.reranking_max_length }}"
+  RERANKING_MAX_CONCURRENCY: "{{ .Values.configmap.reranking_max_concurrency }}"
+  LLM_PROVIDER: {{ .Values.configmap.llm_provider | quote }}
+  LLM_BASE_URL: {{ .Values.configmap.llm_base_url | quote }}
+  LLM_MODEL: {{ .Values.configmap.llm_model | quote }}
+  LLM_SYSTEM_PROMPT: {{ .Values.configmap.llm_system_prompt | quote }}
+  LLM_TIMEOUT_SECONDS: "{{ .Values.configmap.llm_timeout_seconds }}"
+  LLM_VERIFY_TLS: "{{ .Values.configmap.llm_verify_tls }}"
+  LLM_MAX_CONNECTIONS: "{{ .Values.configmap.llm_max_connections }}"
+  LLM_MAX_KEEPALIVE_CONNECTIONS: "{{ .Values.configmap.llm_max_keepalive_connections }}"
+  LLM_TEMPERATURE: "{{ .Values.configmap.llm_temperature }}"
+  LLM_MAX_OUTPUT_TOKENS: "{{ .Values.configmap.llm_max_output_tokens }}"
+{{- end }}

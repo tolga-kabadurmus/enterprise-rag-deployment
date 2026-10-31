@@ -43,7 +43,7 @@ enterprise-rag-embedding-service:
 
 
 enterprise-rag-indexing:
-  enabled: false
+  enabled: true
   image:
     repository: enterprise-rag-enterprise-rag-indexing
     tag: latest
@@ -76,14 +76,14 @@ enterprise-rag-indexing:
     qdrant_vector_size: "384"
     qdrant_batch_size: "64"  
 
-enterprise-rag-query:
-  enabled: false
+enterprise-rag-retrieval:
+  enabled: true
   image:
-    repository: enterprise-rag-query
+    repository: enterprise-rag-retrieval
     tag: latest
   replicas: 1
   service:
-    port: 8080
+    port: 8082
   ingress:
     enabled: true
     host: thyvector.kube.uatthy
@@ -98,8 +98,9 @@ enterprise-rag-query:
     limits:
       cpu: 1
       memory: 1Gi
-  config:
-    embeddingServiceUrl: https://enterprise-rag-embedding-service.kube.uatthy
-    qdrantUrl: https://qdrant.kube.uatthy
+  configmap:
+    embedding_service_url: https://enterprise-rag-embedding-service.kube.uatthy
+    qdrant_url: https://qdrant.kube.uatthy
   secret:
-    llmApiKey: REPLACE_WITH_VAULT_VALUE      
+    llm_api_key: REPLACE_WITH_VAULT_VALUE
+    qdrant_api_key: REPLACE_WITH_VAULT_VALUE
